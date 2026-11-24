@@ -7,8 +7,7 @@
 // own directory or from an absolute output directory.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 
 // The entry: one line, 140 characters at most.
 // Drizminster is invented; the weather (drizzle till nine, then
@@ -18,7 +17,6 @@ import { fileURLToPath } from "node:url";
 const ENTRY =
   "In Drizminster, drizzle till nine, then sunshine — your bus is early, your seat is dry, and Monday has apologised.";
 
-const scriptDir = dirname(fileURLToPath(import.meta.url));
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 // Gate: the bounty requires UTF-8 text of 1 to 140 characters, not
@@ -43,7 +41,8 @@ if (!ENTRY.includes("Drizminster")) {
 
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(join(outputDir, "entry.txt"), ENTRY, "utf8");
-writeFileSync(join(scriptDir, "entry.txt"), ENTRY, "utf8");
+// NOTE: no copy is kept next to this file — the grading sandbox runs
+// /bot read-only, so any write to the script directory fails the run.
 // Round-trip check: what landed on disk must be byte-identical to the
 // entry, with no trailing newline added by the write.
 if (readFileSync(join(outputDir, "entry.txt"), "utf8") !== ENTRY) {
