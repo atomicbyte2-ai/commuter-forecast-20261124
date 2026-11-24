@@ -1,0 +1,1 @@
+{"description":"One-line weather forecast for the invented city of Drizminster, for the make.fun Charm the Commuter bounty","license":"MIT","main":"main.ts","name":"commuter-forecast-20261124","scripts":{"start":"node main.ts"},"type":"module","version":"1.0.0"}
